@@ -40,3 +40,24 @@ h1 {
 	background-color: #AFAF97;
 	text-align: center;
 }
+
+.navigation {
+	display: inline-block;
+	position: relative;
+	margin left: 100px;
+	border: inset;
+	padding: 10px;
+}
+
+#content {
+	border: solid;
+	border-radius: 15px;
+	margin-right: 550px;
+	margin-left: 550px;
+	margin-top: 50px;
+	min-width: 200px;
+	border-width: 5px;
+	padding: 10px;
+	background-color: #AFAF97;
+	text-align: center;
+}
