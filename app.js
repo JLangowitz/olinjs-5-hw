@@ -36,11 +36,14 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/login', Facebook.loginRequired(), index.login);
+app.get('/login', Facebook.loginRequired({
+  scope: ['user_photos', 'friends_photos', 'publish_stream']
+}), index.login);
 
 app.get('/', index.homepage);
 app.get('/logout', facebookGetUser(), index.logout);
 app.post('/color', facebookGetUser(), index.color);
+app.post('/comment', facebookGetUser(), index.comment);
 
 app.get('/users', user.list);
 

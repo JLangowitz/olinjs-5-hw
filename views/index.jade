@@ -3,19 +3,45 @@ extends layout
 block content
 	input(type='hidden', id='user', value='#{userColor}')
 	h1= title
-	div(class="profile")
-		if userColor
+	if userColor
+		div(class="profile")
 			img(src=picURL)
 			form(action="/logout", method="get")
 				p 
 					input(type="submit", name="submit", class="submit", value="Logout")
-				p <a href="http://www.w3schools.com/tags/ref_colorpicker.asp">Open this in a new window to get the color code for a background color of your choice and enter it in the box below</a>
+				p
+				a(href="http://www.w3schools.com/tags/ref_colorpicker.asp",id="colorPicker")|Open this in a new window to get the color code for a background color of your choice and enter it in the box below!</a>
 			form(id="colorPick")
 				input(id="color")
 				input(type="submit") 
-		else
+		div(id="content")
+			div(id="rcarousel")
+				each photo in photos
+					div(id=photo.id)
+						img(src=photo.picture)
+						form(id="commentForm")
+							input(id="comment")
+							input(type="submit")
+			a#ui-carousel-next(href='#', class="navigation") next
+			a#ui-carousel-prev(href='#', class="navigation") prev
+
+	else
+		div(class="profile")
 			form(action="/login", method="get")
 				p 
 					input(type="submit", name="submit", class="submit", value="Login")
 block js
-	script( src="/javascripts/main.js" )
+	script(src="/javascripts/main.js")
+	script(type='text/javascript', src='javascripts/widget/lib/jquery-1.7.1.min.js')
+	script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.core.min.js')
+	script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.widget.min.js')
+	script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.rcarousel.min.js')
+	script(type='text/javascript')
+		jQuery(function($) {
+			$("#rcarousel").rcarousel({
+				width: 200,
+				height: 200, 
+				visible: 1, 
+				step: 1
+			});
+		});

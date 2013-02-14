@@ -5,8 +5,10 @@ User = models.User;
 exports.homepage = function(req, res){
 	var user = req.session.user
 	if (user) {
-		req.facebook.api('/me/picture?redirect=false&type=large', function(err, data) {
-			res.render('index', { title: 'Welcome to your homepage!',  picURL: data.data.url, userColor: user.colorCode });
+		req.facebook.api('/me?fields=picture.type(large),photos.type(large).limit(50).fields(id,picture)', function(err, data) {
+			// console.log(data);
+			// console.log(data.photos.data);
+			res.render('index', { title: 'Welcome to your homepage!',  picURL: data.picture.data.url, photos: data.photos.data, userColor: user.colorCode });
 		});
 	}
 	else {
@@ -16,7 +18,6 @@ exports.homepage = function(req, res){
 
 exports.login =   function (req, res){
 	req.facebook.api('/me', function(err, facebookUser) {
-		// console.log(facebookUser);
 		if (err){
 			return console.log("error", err);
 		}
@@ -42,6 +43,7 @@ exports.logout =   function (req, res){
 };
 
 exports.color = function (req, res){
+	console.log(req.body);
 	User.findOne({facebookId:req.session.user.facebookId}).exec(function(err, user){
 		if (err){
 			return console.log("error", err);
@@ -53,5 +55,14 @@ exports.color = function (req, res){
 			}
 		});
 		res.redirect('/');
+	});
+};
+
+exports.comment = function (req, res){
+	console.log(req.body);
+	req.facebook.api('/'+req.body.photoID+'/comments', 'post', {message: req.body.message}, function(err, data) {
+		if (err){
+			return console.log("error", err);
+		}
 	});
 };
