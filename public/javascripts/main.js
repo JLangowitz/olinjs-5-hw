@@ -7,13 +7,16 @@ $(document).ready(function(){
 	$('#colorPick').submit(function () {
 		var color = $('#color').val();
 		if (color){		
-			$('#color').val('');
-			$('body').css('background-color', color);
-			$('#colorPicker').css('color', color);
 			$.post("/color", { "color": color },
-				function(data){
+				function(err){
 					console.log('hi')
-		            if (!data.err){
+		            if (err){
+		            	console.log('error',err);
+		            }
+		            else{
+						$('#color').val('');
+						$('body').css('background-color', color);
+						$('#colorPicker').css('color', color);
 					}
 		        }, 'json');
 		}
@@ -24,10 +27,13 @@ $(document).ready(function(){
 		var photoID = $('#commentForm').parent().attr('id');
 		console.log(photoID);
 		if (comment){		
-			$('#comment').val('');
 			$.post("/comment", { "message": comment, "id": photoID },
-				function(data){
-		            if (!data.err){
+				function(err){
+		            if (err){
+		            	console.log('error',err);
+					}
+					else{
+						$('#comment').val('');
 					}
 		        }, 'json');
 		}

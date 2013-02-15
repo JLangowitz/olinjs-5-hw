@@ -43,26 +43,29 @@ exports.logout =   function (req, res){
 };
 
 exports.color = function (req, res){
-	console.log(req.body);
 	User.findOne({facebookId:req.session.user.facebookId}).exec(function(err, user){
 		if (err){
+			res.send(err);
 			return console.log("error", err);
 		}
 		user.colorCode = req.body.color;
 		user.save(function(err){
 			if (err){
+				res.send(err);
 				return console.log("error",err);
 			}
+			res.send(err);
 		});
-		res.redirect('/');
 	});
 };
 
 exports.comment = function (req, res){
 	console.log(req.body);
-	req.facebook.api('/'+req.body.photoID+'/comments', 'post', {message: req.body.message}, function(err, data) {
+	req.facebook.api('/'+req.body.id+'/comments', 'post', {message: req.body.message}, function(err, data) {
 		if (err){
-			return console.log("error", err);
+			res.send(err);
+			return console.log("error",err);
 		}
+		res.send(err);
 	});
 };
