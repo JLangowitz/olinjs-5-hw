@@ -9,7 +9,6 @@ $(document).ready(function(){
 		if (color){		
 			$.post("/color", { "color": color },
 				function(err){
-					console.log('hi')
 		            if (err){
 		            	console.log('error',err);
 		            }
@@ -22,11 +21,13 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-	$('#commentForm').submit(function () {
+	console.log($('.commentForm'));
+	$('.commentForm').submit(function () {
 		var comment = $('#comment').val();
-		var photoID = $('#commentForm').parent().attr('id');
+		var photoID = $('.commentForm').parent().attr('id');
 		console.log(photoID);
-		if (comment){		
+		if (comment){
+			console.log('what');	
 			$.post("/comment", { "message": comment, "id": photoID },
 				function(err){
 		            if (err){

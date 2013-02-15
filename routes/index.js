@@ -66,6 +66,7 @@ exports.comment = function (req, res){
 			res.send(err);
 			return console.log("error",err);
 		}
+		console.log(data);
 		res.send(err);
 	});
 };
